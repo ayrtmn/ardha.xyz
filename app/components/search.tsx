@@ -8,10 +8,9 @@ export function Search({ posts }: { posts: Post[] }) {
   const [query, setQuery] = useState('')
   const [isFocused, setIsFocused] = useState(false)
 
-  // Filter posts based on search query
   const filteredPosts = useMemo(() => {
     if (!query.trim()) {
-      return posts.slice(0, 5) // Show recent posts when no search
+      return posts.slice(0, 5)
     }
 
     const searchQuery = query.toLowerCase()
@@ -33,7 +32,12 @@ export function Search({ posts }: { posts: Post[] }) {
           onFocus={() => setIsFocused(true)}
           onBlur={() => setTimeout(() => setIsFocused(false), 200)}
           placeholder="Search blog posts..."
-          className="w-full px-4 py-2 rounded-lg border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-black text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-neutral-300 dark:focus:ring-neutral-700"
+          className="w-full px-4 py-2 rounded-lg focus:outline-none focus:ring-2"
+          style={{
+            backgroundColor: 'var(--bg)',
+            color: 'var(--fg)',
+            border: '1px solid var(--border)',
+          }}
           aria-label="Search blog posts"
           aria-autocomplete="list"
           aria-controls="search-results"
@@ -41,21 +45,24 @@ export function Search({ posts }: { posts: Post[] }) {
         {isFocused && filteredPosts.length > 0 && (
           <ul
             id="search-results"
-            className="absolute z-10 w-full mt-1 bg-white dark:bg-black border border-neutral-300 dark:border-neutral-700 rounded-lg shadow-lg max-h-96 overflow-y-auto"
+            className="absolute z-10 w-full mt-1 rounded-lg shadow-lg max-h-96 overflow-y-auto"
+            style={{
+              backgroundColor: 'var(--bg)',
+              border: '1px solid var(--border)',
+            }}
             role="listbox"
           >
             {filteredPosts.map((post) => (
               <li key={post.slug}>
                 <Link
                   href={`/blog/${post.slug}`}
-                  className="block px-4 py-2 hover:bg-neutral-100 dark:hover:bg-neutral-900 transition-colors"
+                  className="block px-4 py-2 transition-colors"
+                  style={{ color: 'var(--fg)' }}
                   onMouseDown={() => setIsFocused(false)}
                   role="option"
                 >
-                  <p className="font-medium text-neutral-900 dark:text-neutral-100">
-                    {post.metadata.title}
-                  </p>
-                  <p className="text-sm text-neutral-600 dark:text-neutral-400 truncate">
+                  <p className="font-medium">{post.metadata.title}</p>
+                  <p className="text-sm truncate" style={{ color: 'var(--fg-muted)' }}>
                     {post.metadata.summary}
                   </p>
                 </Link>
@@ -65,11 +72,16 @@ export function Search({ posts }: { posts: Post[] }) {
         )}
         {isFocused && filteredPosts.length === 0 && query.trim() && (
           <div
-            className="absolute z-10 w-full mt-1 bg-white dark:bg-black border border-neutral-300 dark:border-neutral-700 rounded-lg shadow-lg px-4 py-2"
+            className="absolute z-10 w-full mt-1 rounded-lg shadow-lg px-4 py-2"
+            style={{
+              backgroundColor: 'var(--bg)',
+              border: '1px solid var(--border)',
+              color: 'var(--fg-muted)',
+            }}
             role="status"
             aria-live="polite"
           >
-            <p className="text-neutral-600 dark:text-neutral-400">No posts found</p>
+            <p>No posts found</p>
           </div>
         )}
       </div>

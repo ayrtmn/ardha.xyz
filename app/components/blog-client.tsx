@@ -9,7 +9,6 @@ import { useState, useMemo } from 'react'
 export function BlogClient({ posts }: { posts: Post[] }) {
   const [selectedTags, setSelectedTags] = useState<string[]>([])
 
-  // Filter posts by selected tags
   const filteredPosts = useMemo(() => {
     if (selectedTags.length === 0) {
       return posts
@@ -22,7 +21,10 @@ export function BlogClient({ posts }: { posts: Post[] }) {
 
   return (
     <section>
-      <h1 className="font-semibold text-2xl mb-8 tracking-tighter">My Blog</h1>
+      <h1 className="text-2xl font-bold tracking-tight mb-4" style={{ color: 'var(--fg)' }}>
+        Writing
+      </h1>
+      <div className="mb-8" style={{ borderBottom: '1px solid var(--border)' }} />
       <Search posts={filteredPosts} />
       <TagsFilter
         posts={posts}
@@ -31,7 +33,7 @@ export function BlogClient({ posts }: { posts: Post[] }) {
       />
       <BlogPosts posts={filteredPosts} />
       {selectedTags.length > 0 && (
-        <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-4">
+        <p className="text-sm mb-4" style={{ color: 'var(--fg-muted)' }}>
           Showing {filteredPosts.length} post{filteredPosts.length !== 1 ? 's' : ''} filtered by:{' '}
           {selectedTags.join(', ')}
         </p>

@@ -1,39 +1,38 @@
 import Link from 'next/link'
+import { ThemeToggle } from './theme-toggle'
 
-const navItems = {
-  '/': {
-    name: 'home',
-  },
-  '/blog': {
-    name: 'blog',
-  },
-}
+const navItems = [
+  { path: '/about', name: 'about' },
+  { path: '/now', name: 'now' },
+  { path: '/blog', name: 'writing' },
+]
 
 export function Navbar() {
   return (
-    <aside className="-ml-[8px] mb-16 tracking-tight">
-      <div className="lg:sticky lg:top-20">
-        <nav
-          className="flex flex-row items-start relative px-0 pb-0 fade md:overflow-auto scroll-pr-6 md:relative"
-          id="main-nav"
-          aria-label="Main navigation"
-        >
-          <div className="flex flex-row space-x-0 pr-10">
-            {Object.entries(navItems).map(([path, { name }]) => {
-              return (
-                <Link
-                  key={path}
-                  href={path}
-                  className="transition-all hover:text-neutral-800 dark:hover:text-neutral-200 flex align-middle relative py-1 px-2 m-1"
-                  aria-current={path === '/' ? 'page' : undefined}
-                >
-                  {name}
-                </Link>
-              )
-            })}
-          </div>
-        </nav>
+    <nav className="mb-12 md:mb-16 flex items-center justify-between gap-4">
+      <Link 
+        href="/" 
+        className="text-lg font-bold tracking-tight flex-shrink-0"
+        style={{ color: 'var(--fg)' }}
+      >
+        Ardha
+      </Link>
+      <div className="flex items-center gap-4 md:gap-6 flex-shrink-0">
+        <div className="flex gap-3 md:gap-4 text-sm" style={{ color: 'var(--fg-muted)' }}>
+          {navItems.map((item, i) => (
+            <span key={item.path} className="flex items-center gap-3 md:gap-4">
+              {i > 0 && <span style={{ color: 'var(--border)' }}>·</span>}
+              <Link
+                href={item.path}
+                className="hover:opacity-70 transition-opacity whitespace-nowrap"
+              >
+                {item.name}
+              </Link>
+            </span>
+          ))}
+        </div>
+        <ThemeToggle />
       </div>
-    </aside>
+    </nav>
   )
 }
