@@ -120,4 +120,4 @@ Custom MDX components using `next-mdx-remote/rsc`:
    - RSS feed
    - Static generation at build time
 
-**Source Badge:** When `source` field is provided, a natural text attribution will appear on a separate line before the article body: "First published on [icon platform] at [link]". The icon and platform name are clickable and link to the original post. This layout prevents the date row from becoming crowded.
+**Source Badge:** When `source` field is provided, a natural text attribution will appear on the same line as the publish date: "First published on [icon platform] at [link]". The icon and platform name are clickable and link to the original post.

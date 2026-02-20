@@ -101,10 +101,18 @@ export default async function Blog({ params }: { params: Promise<PageParams> }) 
       <h1 className="title font-semibold text-2xl tracking-tighter">
         {post.metadata.title}
       </h1>
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mt-2 mb-4 text-sm gap-2">
-        <p className="text-sm text-neutral-600 dark:text-neutral-400">
-          {formatDate(post.metadata.publishedAt)}
-        </p>
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mt-2 mb-8 text-sm gap-2">
+        <div className="flex items-center gap-3">
+          <p className="text-sm text-neutral-600 dark:text-neutral-400">
+            {formatDate(post.metadata.publishedAt)}
+          </p>
+          {post.metadata.source && (
+            <SourceBadge
+              platform={post.metadata.source.platform}
+              url={post.metadata.source.url}
+            />
+          )}
+        </div>
         <div className="flex items-center gap-3">
           <span className="text-sm text-neutral-600 dark:text-neutral-400">
             {calculateReadingTime(post.content)} min read
@@ -123,14 +131,6 @@ export default async function Blog({ params }: { params: Promise<PageParams> }) 
           )}
         </div>
       </div>
-      {post.metadata.source && (
-        <div className="mb-8">
-          <SourceBadge
-            platform={post.metadata.source.platform}
-            url={post.metadata.source.url}
-          />
-        </div>
-      )}
       <article className="prose">
         <CustomMDX source={post.content} />
       </article>
